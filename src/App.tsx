@@ -1,12 +1,15 @@
+import productData from "./data/data.json";
+import ProductList from "./components/ProductList";
+import type { Product } from "./types";
+
+const products = productData as Product[]
 
 function App() {
-
-
-  return (
-    <>
-      <div>hello</div>
-    </>
-  )
+	return (
+		<>
+			<ProductList products={products} />
+		</>
+	);
 }
 
-export default App
+export default App;
