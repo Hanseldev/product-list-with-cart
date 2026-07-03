@@ -1,14 +1,50 @@
 import productData from "./data/data.json";
 import ProductList from "./components/ProductList";
-import type { Product } from "./types";
+import { type CartItem, type Product } from "./types";
+import { useState } from "react";
+import Cart from "./components/Cart";
 
-const products = productData as Product[]
+const products = productData as Product[];
 
 function App() {
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+	function addToCart(product: Product) {
+		setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
+	}
+
+	function incrementItem(productName: string) {
+		setCartItems((prev) =>
+			prev.map((item) =>
+				item.name === productName
+					? { ...item, quantity: item.quantity + 1 }
+					: item,
+			),
+		);
+	}
+
+	function decrementItem(productName: string) {
+		setCartItems((prev) =>
+			prev
+				.map((item) =>
+					item.name === productName
+						? { ...item, quantity: item.quantity - 1 }
+						: item,
+				)
+				.filter((item) => item.quantity > 0),
+		);
+	}
+
 	return (
-		<main className="bg-rose-50 p-4 grid lg:grid-cols-2 gap-4">
-			<ProductList products={products} />
-      <div>Hey</div>
+		<main className="bg-rose-100 p-8 grid lg:grid-cols-[7fr_3fr] gap-4">
+			<ProductList
+				products={products}
+				cartItems={cartItems}
+				onAddToCart={addToCart}
+				onIncrement={incrementItem}
+				onDecrement={decrementItem}
+			/>
+			<Cart cartItems={cartItems} setCartItems={setCartItems} />
 		</main>
 	);
 }

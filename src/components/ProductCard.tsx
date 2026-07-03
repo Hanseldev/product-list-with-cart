@@ -1,15 +1,29 @@
-import type { Product } from "../types";
+import type { CartItem, Product } from "../types";
 import { resolveImage } from "../utils/images";
 import addToCartIcon from "../assets/images/icon-add-to-cart.svg";
 
 interface ProductCardProps {
 	product: Product;
+	cartItems: CartItem[];
+	onAddToCart: (product: Product) => void;
+	onIncrement: (productName: string) => void;
+	onDecrement: (productName: string) => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({
+	product,
+	cartItems,
+	onAddToCart,
+	onIncrement,
+	onDecrement,
+}: ProductCardProps) {
+	const cartItem = cartItems.find((item) => item.name === product.name);
+	const isInCart = cartItem !== undefined;
 	return (
 		<div className="relative flex flex-col">
-			<div className="relative w-fit mb-8">
+			<div
+				className={`relative w-fit mb-8 ${isInCart ? "outline-2 outline-red rounded-xl" : ""}`}
+			>
 				<picture>
 					<source
 						media="(min-width: 1024px)"
@@ -27,10 +41,19 @@ function ProductCard({ product }: ProductCardProps) {
 						className="rounded-xl"
 					/>
 				</picture>
-				<button className="absolute -translate-1/2 left-1/2 py-2 px-8 border border-rose-300 text-rose-900 font-semibold bg-white rounded-full cursor-pointer flex gap-x-2 whitespace-nowrap">
-					<img src={addToCartIcon} alt="" />
-					Add to Cart
-				</button>
+
+				{isInCart ? (
+					<div className="absolute -translate-1/2 left-1/2 flex items-center justify-center gap-x-4 py-2 px-4 bg-red rounded-full">
+						<button onClick={() => onDecrement(product.name)}>−</button>
+						<span className="text-white">{cartItem.quantity}</span>
+						<button onClick={() => onIncrement(product.name)}>+</button>
+					</div>
+				) : (
+					<button onClick={() => onAddToCart(product)} className="absolute -translate-1/2 left-1/2 py-2 px-8 border border-red text-rose-900 font-semibold bg-white rounded-full cursor-pointer flex items-center justify-center gap-x-2 whitespace-nowrap hover:text-red">
+						<img src={addToCartIcon} alt="" />
+						Add to Cart
+					</button>
+				)}
 			</div>
 
 			<p className="font-light text-rose-500">{product.category}</p>
