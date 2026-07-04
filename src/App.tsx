@@ -13,6 +13,10 @@ function App() {
 		setCartItems((prev) => [...prev, { ...product, quantity: 1 }]);
 	}
 
+	function clearCart() {
+		setCartItems([]);
+	}
+
 	function incrementItem(productName: string) {
 		setCartItems((prev) =>
 			prev.map((item) =>
@@ -36,7 +40,7 @@ function App() {
 	}
 
 	function removeFromCart(productName: string) {
-		setCartItems((prev) => prev.filter((item) => item.name !== productName))
+		setCartItems((prev) => prev.filter((item) => item.name !== productName));
 	}
 
 	return (
@@ -48,7 +52,11 @@ function App() {
 				onIncrement={incrementItem}
 				onDecrement={decrementItem}
 			/>
-			<Cart cartItems={cartItems} onRemoveFromCart={removeFromCart} />
+			<Cart
+				cartItems={cartItems}
+				onRemoveFromCart={removeFromCart}
+				onClearCart={clearCart}
+			/>
 		</main>
 	);
 }

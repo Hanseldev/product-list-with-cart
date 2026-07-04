@@ -2,17 +2,22 @@ import type { CartItem } from "../types";
 import emptyCartImage from "../assets/images/illustration-empty-cart.svg";
 import treeIcon from "../assets/images/icon-carbon-neutral.svg";
 import CartItemCard from "./CartItemCard";
+import OrderSummary from "./OrderSummary";
+import { useState } from "react";
 
 interface CartProps {
 	cartItems: CartItem[];
 	onRemoveFromCart: (productName: string) => void;
+	onClearCart: () => void;
 }
 
-function Cart({ cartItems, onRemoveFromCart }: CartProps) {
+function Cart({ cartItems, onRemoveFromCart, onClearCart }: CartProps) {
 	let totalPrice = 0;
 	cartItems.map((cartItem) => {
 		totalPrice += cartItem.price * cartItem.quantity;
 	});
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	return (
 		<div className="flex flex-col bg-white w-full h-fit p-4 rounded-2xl">
@@ -30,7 +35,11 @@ function Cart({ cartItems, onRemoveFromCart }: CartProps) {
 				<div>
 					<div className="flex flex-col gap-y-4 my-4">
 						{cartItems.map((cartItem) => (
-							<CartItemCard onRemoveFromCart={onRemoveFromCart} key={cartItem.name} cartItem={cartItem} />
+							<CartItemCard
+								onRemoveFromCart={onRemoveFromCart}
+								key={cartItem.name}
+								cartItem={cartItem}
+							/>
 						))}
 					</div>
 
@@ -46,10 +55,22 @@ function Cart({ cartItems, onRemoveFromCart }: CartProps) {
 						This is a <strong>&nbsp;carbon-neutral&nbsp;</strong> delivery
 					</div>
 
-					<button className="bg-red hover:bg-[color-mix(in_srgb,var(--color-red)_90%,black)] cursor-pointer w-full rounded-full p-4 text-white font-semibold text-xl">
+					<button
+						onClick={() => setIsModalOpen(true)}
+						className="bg-red hover:bg-[color-mix(in_srgb,var(--color-red)_90%,black)] cursor-pointer w-full rounded-full p-4 text-white font-semibold text-xl"
+					>
 						Confirm Order
 					</button>
 				</div>
+			)}
+			{isModalOpen && (
+				<OrderSummary
+					cartItems={cartItems}
+					onClose={() => {
+						setIsModalOpen(false);
+						onClearCart();
+					}}
+				/>
 			)}
 		</div>
 	);
