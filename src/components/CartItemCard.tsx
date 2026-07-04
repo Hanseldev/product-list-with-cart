@@ -3,9 +3,10 @@ import { RemoveIcon } from "./Icons";
 
 interface CartProps {
 	cartItem: CartItem;
+	onRemoveFromCart: (productName: string) => void;
 }
 
-function CardItemCard({ cartItem }: CartProps) {
+function CardItemCard({ cartItem, onRemoveFromCart }: CartProps) {
 	return (
 		<>
 			<div className="flex items-center justify-between">
@@ -20,7 +21,7 @@ function CardItemCard({ cartItem }: CartProps) {
 						</p>
 					</div>
 				</div>
-				<button className="border p-1 h-fit rounded-full border-rose-300 hover:border-rose-900 cursor-pointer">
+				<button className="border p-1 h-fit rounded-full border-rose-300 hover:border-rose-900 cursor-pointer" onClick={() => onRemoveFromCart(cartItem.name)}>
 					<RemoveIcon className=" hover:text-rose-900 text-rose-500" />
 				</button>
 			</div>

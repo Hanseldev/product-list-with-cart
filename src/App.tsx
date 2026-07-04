@@ -35,6 +35,10 @@ function App() {
 		);
 	}
 
+	function removeFromCart(productName: string) {
+		setCartItems((prev) => prev.filter((item) => item.name !== productName))
+	}
+
 	return (
 		<main className="bg-rose-100 p-8 grid lg:grid-cols-[7fr_3fr] gap-4">
 			<ProductList
@@ -44,7 +48,7 @@ function App() {
 				onIncrement={incrementItem}
 				onDecrement={decrementItem}
 			/>
-			<Cart cartItems={cartItems} setCartItems={setCartItems} />
+			<Cart cartItems={cartItems} onRemoveFromCart={removeFromCart} />
 		</main>
 	);
 }

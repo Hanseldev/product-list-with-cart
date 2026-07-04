@@ -5,10 +5,10 @@ import CartItemCard from "./CartItemCard";
 
 interface CartProps {
 	cartItems: CartItem[];
-	setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+	onRemoveFromCart: (productName: string) => void;
 }
 
-function Cart({ cartItems }: CartProps) {
+function Cart({ cartItems, onRemoveFromCart }: CartProps) {
 	let totalPrice = 0;
 	cartItems.map((cartItem) => {
 		totalPrice += cartItem.price * cartItem.quantity;
@@ -30,7 +30,7 @@ function Cart({ cartItems }: CartProps) {
 				<div>
 					<div className="flex flex-col gap-y-4 my-4">
 						{cartItems.map((cartItem) => (
-							<CartItemCard key={cartItem.name} cartItem={cartItem} />
+							<CartItemCard onRemoveFromCart={onRemoveFromCart} key={cartItem.name} cartItem={cartItem} />
 						))}
 					</div>
 
