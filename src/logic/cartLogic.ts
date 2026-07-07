@@ -3,11 +3,7 @@ import type { CartItem, Product } from "../types";
 export function addItem(cart: CartItem[], product: Product): CartItem[] {
 	const existing = cart.find((item) => item.name === product.name);
 	if (existing) {
-		return cart.map((item) =>
-			item.name === product.name
-				? { ...item, quantity: item.quantity + 1 }
-				: item,
-		);
+		return incrementItem(cart, product.name)
 	}
 	return [...cart, { ...product, quantity: 1 }];
 }
