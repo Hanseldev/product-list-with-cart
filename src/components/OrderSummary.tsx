@@ -5,13 +5,9 @@ import confirmedOrderIcon from "../assets/images/icon-order-confirmed.svg";
 interface OrderSummaryProps {
 	cartItems: CartItem[];
 	onClose: () => void;
+	onGetTotal: (cart: CartItem[]) => number;
 }
-function OrderSummary({ cartItems, onClose }: OrderSummaryProps) {
-	let totalPrice = 0;
-	cartItems.map((cartItem) => {
-		totalPrice += cartItem.price * cartItem.quantity;
-	});
-
+function OrderSummary({ cartItems, onClose, onGetTotal }: OrderSummaryProps) {
 	return (
 		<div
 			className="fixed inset-0 flex items-end justify-center lg:items-center bg-black/50"
@@ -35,7 +31,7 @@ function OrderSummary({ cartItems, onClose }: OrderSummaryProps) {
 					<div className="flex items-center justify-between">
 						<span className="text-rose-900 text-lg">Order Total</span>
 						<span className="text-3xl font-bold text-rose-900">
-							${totalPrice.toFixed(2)}
+							${onGetTotal(cartItems).toFixed(2)}
 						</span>
 					</div>
 				</div>

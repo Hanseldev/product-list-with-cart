@@ -9,14 +9,15 @@ interface CartProps {
 	cartItems: CartItem[];
 	onRemoveFromCart: (productName: string) => void;
 	onClearCart: () => void;
+	onGetTotal: (cart: CartItem[]) => number;
 }
 
-function Cart({ cartItems, onRemoveFromCart, onClearCart }: CartProps) {
-	let totalPrice = 0;
-	cartItems.map((cartItem) => {
-		totalPrice += cartItem.price * cartItem.quantity;
-	});
-
+function Cart({
+	cartItems,
+	onRemoveFromCart,
+	onClearCart,
+	onGetTotal,
+}: CartProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	return (
@@ -46,7 +47,7 @@ function Cart({ cartItems, onRemoveFromCart, onClearCart }: CartProps) {
 					<div className="flex items-center justify-between mb-8">
 						<span className="text-rose-500 text-lg">Order Total</span>
 						<span className="text-3xl font-bold text-rose-900">
-							${totalPrice.toFixed(2)}
+							${onGetTotal(cartItems).toFixed(2)}
 						</span>
 					</div>
 
@@ -70,6 +71,7 @@ function Cart({ cartItems, onRemoveFromCart, onClearCart }: CartProps) {
 						setIsModalOpen(false);
 						onClearCart();
 					}}
+					onGetTotal={onGetTotal}
 				/>
 			)}
 		</div>
