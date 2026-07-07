@@ -141,7 +141,7 @@ describe("decrementItem", () => {
 		expect(result[0].quantity).toBe(4);
 	});
 
-    test("returns cart unchanged when decreasing a nonexistent product's value", () => {
+	test("returns cart unchanged when decreasing a nonexistent product's value", () => {
 		const product1: Product = {
 			name: "Product1",
 			category: "fashion",
@@ -245,7 +245,7 @@ describe("incrementItem", () => {
 		expect(result[0].quantity).toBe(3);
 	});
 
-    test("returns cart unchanged when increasing a nonexistent product's value", () => {
+	test("returns cart unchanged when increasing a nonexistent product's value", () => {
 		const product1: Product = {
 			name: "Product1",
 			category: "fashion",
