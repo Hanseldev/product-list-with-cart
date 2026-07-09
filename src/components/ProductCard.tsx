@@ -45,12 +45,19 @@ function ProductCard({
 
 				{isInCart ? (
 					<div className="absolute -translate-1/2 left-1/2 flex items-center justify-center gap-x-4 py-2 px-4 bg-red rounded-full">
-						<button className="" onClick={() => onDecrement(product.name)}>
+						<button
+							aria-label="Decrease quantity"
+							className=""
+							onClick={() => onDecrement(product.name)}
+						>
 							<DecrementIcon className="border-2 rounded-full h-6 w-6 p-2 inset-2 cursor-pointer stroke-white border-white stroke-[1.5px] text-white hover:bg-white hover:text-red hover:stroke-red" />
 						</button>
 						<span className="text-white">{cartItem.quantity}</span>
-						<button onClick={() => onIncrement(product.name)}>
-							<IncrementIcon className="border-2 rounded-full h-6 w-6 p-2 inset-2 cursor-pointer stroke-white border-white stroke-[1.5px] text-white hover:bg-white hover:text-red hover:stroke-red"/>
+						<button
+							aria-label="Increase quantity"
+							onClick={() => onIncrement(product.name)}
+						>
+							<IncrementIcon className="border-2 rounded-full h-6 w-6 p-2 inset-2 cursor-pointer stroke-white border-white stroke-[1.5px] text-white hover:bg-white hover:text-red hover:stroke-red" />
 						</button>
 					</div>
 				) : (
